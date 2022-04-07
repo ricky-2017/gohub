@@ -1,39 +1,38 @@
 package main
 
 import (
-	"net/http"
-	"strings"
+	"flag"
+	"fmt"
+	"gohub/bootstrap"
+	btsConfig "gohub/config"
+	"gohub/pkg/config"
 
 	"github.com/gin-gonic/gin"
 )
 
+func init() {
+	// 加载 config 目录下的配置信息
+	btsConfig.Initialize()
+}
+
 func main() {
-	// r := gin.Default()
-	r := gin.New()
 
-	// 中间件注册
-	r.Use(gin.Logger(), gin.Recovery())
+	// 配置初始化，依赖命令行 --env 参数
+	var env string
+	flag.StringVar(&env, "env", "", "加载 .env 文件，如 --env=testing 加载的是 .env.testing 文件")
+	flag.Parse()
+	config.InitConfig(env)
 
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"Hello": "rubio",
-		})
-	})
+	// new 一个 Gin Engine 实例
+	router := gin.New()
 
-	r.NoRoute(func(ctx *gin.Context) {
-		// 获取标头信息的Accpet信息
-		acceptString := ctx.Request.Header.Get("Accept")
-		if strings.Contains(acceptString, "text/html") {
-			// html返回
-			ctx.String(http.StatusNotFound, "页面返回 404")
-		} else {
-			// 默认json
-			ctx.JSON(http.StatusNotFound, gin.H{
-				"code":    404,
-				"massage": "请求资源不存在",
-			})
-		}
-	})
+	// 初始化路由绑定
+	bootstrap.SetupRoute(router)
 
-	r.Run()
+	// 运行服务
+	err := router.Run(":" + config.Get("app.port"))
+	if err != nil {
+		// 错误处理，端口被占用了或者其他错误
+		fmt.Println(err.Error())
+	}
 }
