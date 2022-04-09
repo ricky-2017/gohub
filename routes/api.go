@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"gohub/app/models/http/controller/api/v1/auth"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -15,5 +16,13 @@ func RegisterAPIRoutes(r *gin.Engine) {
 				"yes": "Baby",
 			})
 		})
+
+		// auth相关
+		authGroup := v1.Group("/auth")
+		{
+			suc := new(auth.SignupController)
+			// 判断手机是否注册
+			authGroup.POST("/signup/phone/exist", suc.IsPhoneExist)
+		}
 	}
 }
