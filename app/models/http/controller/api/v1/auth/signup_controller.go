@@ -33,7 +33,6 @@ func (sc *SignupController) IsPhoneExist(c *gin.Context) {
 		// 出错了，中断请求
 		return
 	}
-
 	// 表单验证
 	errs := requests.ValidateSignupPhoneExist(&request, c)
 	// errs 返回长度等于零即通过，大于 0 即有错误发生
