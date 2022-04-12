@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"gohub/app/models/http/controller/api/v1/auth"
+	"gohub/app/http/controllers/api/v1/auth"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -13,7 +13,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		// 注册路由
 		v1.GET("/", func(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{
-				"yes": "Baby",
+				"1": "2",
 			})
 		})
 
