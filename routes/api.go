@@ -24,12 +24,15 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			// 判断手机是否注册
 			authGroup.POST("/signup/phone/exist", suc.IsPhoneExist)
 			authGroup.POST("/signup/email/exist", suc.IsEmailExist)
+			authGroup.POST("/signup/using-phone", suc.SignupUsingPhone)
+			authGroup.POST("/signup/using-email", suc.SignupUsingEmail)
 
 			vfc := new(auth.VerifyCodeController)
 			// 获取图形验证码
 			authGroup.POST("/verfiy-codes/captcha", vfc.ShowCaptcha)
 			authGroup.POST("/verify-codes/phone", vfc.SendUsingPhone)
 			authGroup.POST("/verify-codes/email", vfc.SendUsingEmail)
+			// 用户注册
 		}
 
 	}
