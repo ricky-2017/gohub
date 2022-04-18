@@ -28,6 +28,8 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			vfc := new(auth.VerifyCodeController)
 			// 获取图形验证码
 			authGroup.POST("/verfiy-codes/captcha", vfc.ShowCaptcha)
+			authGroup.POST("/verify-codes/phone", vfc.SendUsingPhone)
+			authGroup.POST("/verify-codes/email", vfc.SendUsingEmail)
 		}
 
 	}
