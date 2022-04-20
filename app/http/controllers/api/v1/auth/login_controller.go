@@ -56,3 +56,15 @@ func (lc *LoginController) LoginByAccount(c *gin.Context) {
 		})
 	}
 }
+
+// token刷新
+func (lc *LoginController) RefreshToken(c *gin.Context) {
+	token, err := jwt.NewJWT().RefreshToken(c)
+	if err != nil {
+		response.Error(c, err, "token刷新失败")
+	} else {
+		response.JSON(c, gin.H{
+			"token": token,
+		})
+	}
+}
