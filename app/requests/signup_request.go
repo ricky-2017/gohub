@@ -49,11 +49,11 @@ func SignupEmailExist(data interface{}, c *gin.Context) map[string][]string {
 }
 
 type SignupUsingPhoneRequest struct {
-	Phone           string `json:"phone,omitempty" vaild:"phone"`
-	VerifyCode      string `json:"verify_code,omitempty" vaild:"verify_code"`
-	Name            string `json:"name,omitempty" vaild:"name"`
-	Password        string `json:"password,omitempty" vaild:"password"`
-	PasswordConfirm string `json:"password_confirm,omitempty" vaild:"password_confirm"`
+	Phone           string `json:"phone,omitempty" valid:"phone"`
+	VerifyCode      string `json:"verify_code,omitempty" valid:"verify_code"`
+	Name            string `json:"name,omitempty" valid:"name"`
+	Password        string `json:"password,omitempty" valid:"password"`
+	PasswordConfirm string `json:"password_confirm,omitempty" valid:"password_confirm"`
 }
 
 func SignupUsingPhone(data interface{}, c *gin.Context) map[string][]string {
@@ -98,11 +98,11 @@ func SignupUsingPhone(data interface{}, c *gin.Context) map[string][]string {
 }
 
 type SignupUsingEmailRequest struct {
-	Email           string `json:"email,omitempty" vaild:"email"`
-	VerifyCode      string `json:"verify_code,omitempty" vaild:"verify_code"`
-	Name            string `json:"name,omitempty" vaild:"name"`
-	Password        string `json:"password,omitempty" vaild:"password"`
-	PasswordConfirm string `json:"password_confirm,omitempty" vaild:"password_confirm"`
+	Email           string `json:"email,omitempty" valid:"email"`
+	VerifyCode      string `json:"verify_code,omitempty" valid:"verify_code"`
+	Name            string `json:"name,omitempty" valid:"name"`
+	Password        string `json:"password,omitempty" valid:"password"`
+	PasswordConfirm string `json:"password_confirm,omitempty" valid:"password_confirm"`
 }
 
 func SignupUsingEmail(data interface{}, c *gin.Context) map[string][]string {

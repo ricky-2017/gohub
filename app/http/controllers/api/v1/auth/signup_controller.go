@@ -41,6 +41,7 @@ func (sc *SignupController) IsEmailExist(c *gin.Context) {
 	})
 }
 
+// SignupUsingPhone 使用手机进行注册
 func (sc *SignupController) SignupUsingPhone(c *gin.Context) {
 	request := requests.SignupUsingPhoneRequest{}
 	if ok := requests.Validate(c, &request, requests.SignupUsingPhone); !ok {

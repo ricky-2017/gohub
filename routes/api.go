@@ -32,7 +32,11 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			authGroup.POST("/verfiy-codes/captcha", vfc.ShowCaptcha)
 			authGroup.POST("/verify-codes/phone", vfc.SendUsingPhone)
 			authGroup.POST("/verify-codes/email", vfc.SendUsingEmail)
-			// 用户注册
+
+			// 用户登录
+			lgc := new(auth.LoginController)
+			authGroup.POST("/login/using-phone", lgc.LoginByPhone)
+			authGroup.POST("/login/using-password", lgc.LoginByAccount)
 		}
 
 	}
