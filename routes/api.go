@@ -27,11 +27,11 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			authGroup.POST("/signup/using-phone", middlewares.GuestJWT(), suc.SignupUsingPhone)
 			authGroup.POST("/signup/using-email", middlewares.GuestJWT(), suc.SignupUsingEmail)
 
+			// 验证码相关
 			vfc := new(auth.VerifyCodeController)
-			// 获取图形验证码
-			authGroup.POST("/verfiy-codes/captcha", middlewares.GuestJWT(), vfc.ShowCaptcha)
-			authGroup.POST("/verify-codes/phone", middlewares.GuestJWT(), middlewares.LimitPerRoute("50-H"), vfc.SendUsingPhone)
-			authGroup.POST("/verify-codes/email", middlewares.GuestJWT(), vfc.SendUsingEmail)
+			authGroup.POST("/verfiy-codes/captcha", vfc.ShowCaptcha)
+			authGroup.POST("/verify-codes/phone", middlewares.LimitPerRoute("50-H"), vfc.SendUsingPhone)
+			authGroup.POST("/verify-codes/email", vfc.SendUsingEmail)
 
 			// 用户登录
 			lgc := new(auth.LoginController)
