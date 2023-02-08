@@ -37,7 +37,7 @@ func (lc *LoginController) LoginByPhone(c *gin.Context) {
 	}
 }
 
-// 账号/邮箱/手机 登录
+// LoginByAccount 账号/邮箱/手机 登录
 func (lc *LoginController) LoginByAccount(c *gin.Context) {
 	request := dto.LoginByPasswordDto{}
 	if ok := requests.Validate(c, &request, dto.ValidLoginByPassword); !ok {
@@ -57,7 +57,7 @@ func (lc *LoginController) LoginByAccount(c *gin.Context) {
 	}
 }
 
-// token刷新
+// RefreshToken token刷新
 func (lc *LoginController) RefreshToken(c *gin.Context) {
 	token, err := jwt.NewJWT().RefreshToken(c)
 	if err != nil {

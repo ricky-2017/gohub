@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// 用户登录JWT鉴权中间件
+// AuthJwt 用户登录JWT鉴权中间件
 func AuthJwt() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		claims, err := jwt.NewJWT().ParserToken(ctx)

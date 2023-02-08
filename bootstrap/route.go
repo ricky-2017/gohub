@@ -12,7 +12,7 @@ import (
 func SetupRoute(router *gin.Engine) {
 
 	// 全局中间件
-	registerGlobalMidderWare(router)
+	registerGlobalMiddleWare(router)
 
 	//  注册 API 路由
 	routes.RegisterAPIRoutes(router)
@@ -21,7 +21,7 @@ func SetupRoute(router *gin.Engine) {
 	setup404Handler(router)
 }
 
-func registerGlobalMidderWare(router *gin.Engine) {
+func registerGlobalMiddleWare(router *gin.Engine) {
 	router.Use(
 		middlewares.Logger(),
 		middlewares.Recovery(),
