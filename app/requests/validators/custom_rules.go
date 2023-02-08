@@ -5,7 +5,9 @@ import (
 	"errors"
 	"fmt"
 	"gohub/pkg/database"
+	"strconv"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/thedevsaddam/govalidator"
 )
@@ -57,6 +59,34 @@ func init() {
 			return fmt.Errorf("%v 已被占用", requestValue)
 		}
 		// 验证通过
+		return nil
+	})
+
+	// max_cn:{rule_max} 中文长度设定不超过{rule_max}
+	govalidator.AddCustomRule("max_cn", func(field string, rule string, message string, value interface{}) error {
+		valLength := utf8.RuneCountInString(value.(string))
+		ruleMax, _ := strconv.Atoi(strings.TrimPrefix(rule, "max_cn:"))
+		if valLength > ruleMax {
+			// 如果有自定义错误消息的话，使用自定义消息
+			if message != "" {
+				return errors.New(message)
+			}
+			return fmt.Errorf("长度不能超过 %d 个字", ruleMax)
+		}
+		return nil
+	})
+
+	// min_cn:{rule_min} 中午长度设定不能少于{rule_min}
+	govalidator.AddCustomRule("min_cn", func(field string, rule string, message string, value interface{}) error {
+		valLength := utf8.RuneCountInString(value.(string))
+		ruleMin, _ := strconv.Atoi(strings.TrimPrefix(rule, "min_cn:"))
+		if valLength < ruleMin {
+			// 如果有自定义错误消息的话，使用自定义消息
+			if message != "" {
+				return errors.New(message)
+			}
+			return fmt.Errorf("长度不能少于 %d 个字", ruleMin)
+		}
 		return nil
 	})
 }
