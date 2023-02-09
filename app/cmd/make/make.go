@@ -14,34 +14,39 @@ import (
 
 // Model 参数解释
 // 单个词，用户命令传参，以 User 模型为例：
-//  - user
-//  - User
-//  - users
-//  - Users
+//   - user
+//   - User
+//   - users
+//   - Users
+//
 // 整理好的数据：
-// {
-//     "TableName": "users",
-//     "StructName": "User",
-//     "StructNamePlural": "Users"
-//     "VariableName": "user",
-//     "VariableNamePlural": "users",
-//     "PackageName": "user"
-// }
+//
+//	{
+//	    "TableName": "users",
+//	    "StructName": "User",
+//	    "StructNamePlural": "Users"
+//	    "VariableName": "user",
+//	    "VariableNamePlural": "users",
+//	    "PackageName": "user"
+//	}
+//
 // -
 // 两个词或者以上，用户命令传参，以 TopicComment 模型为例：
-//  - topic_comment
-//  - topic_comments
-//  - TopicComment
-//  - TopicComments
+//   - topic_comment
+//   - topic_comments
+//   - TopicComment
+//   - TopicComments
+//
 // 整理好的数据：
-// {
-//     "TableName": "topic_comments",
-//     "StructName": "TopicComment",
-//     "StructNamePlural": "TopicComments"
-//     "VariableName": "topicComment",
-//     "VariableNamePlural": "topicComments",
-//     "PackageName": "topic_comment"
-// }
+//
+//	{
+//	    "TableName": "topic_comments",
+//	    "StructName": "TopicComment",
+//	    "StructNamePlural": "TopicComments"
+//	    "VariableName": "topicComment",
+//	    "VariableNamePlural": "topicComments",
+//	    "PackageName": "topic_comment"
+//	}
 type Model struct {
 	TableName          string
 	StructName         string
@@ -52,6 +57,7 @@ type Model struct {
 }
 
 // stubsFS 方便我们后面打包这些 .stub 为后缀名的文件
+//
 //go:embed stubs
 var stubsFS embed.FS
 
@@ -69,6 +75,9 @@ func init() {
 		CmdMakeAPIController,
 		CmdMakeRequest,
 		CmdMakeMigration,
+		CmdMakePolicy,
+		CmdMakeFactory,
+		CmdMakeSeeder,
 	)
 }
 
