@@ -18,7 +18,6 @@ func RegisterAPIRoutes(r *gin.Engine) {
 	{
 		// auth相关
 		authGroup := v1.Group("/auth")
-
 		authGroup.Use(middlewares.LimitIP("1000-H"))
 		{
 			suc := new(auth.SignupController)
@@ -70,6 +69,13 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			tpcGroup.POST("", middlewares.AuthJwt(), tpc.Store)
 			tpcGroup.PUT("/:id", middlewares.AuthJwt(), tpc.Update)
 			tpcGroup.DELETE("/:id", middlewares.AuthJwt(), tpc.Delete)
+		}
+
+		// 文章控制器路由
+		articleController := new(controllers.ArticlesController)
+		articleGroup := v1.Group("/article")
+		{
+			articleGroup.GET("/lists", middlewares.CrossOrigin(), articleController.Lists)
 		}
 	}
 }

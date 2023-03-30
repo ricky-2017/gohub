@@ -11,6 +11,7 @@ type Category struct {
 
 	Name        string `json:"name,omitempty"`
 	Description string `json:"description,omitempty"`
+	Status      uint64 `json:"status"`
 
 	models.CommonTimestampsField
 }
