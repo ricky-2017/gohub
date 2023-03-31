@@ -3,6 +3,7 @@ package article
 import (
 	"gohub/pkg/app"
 	"gohub/pkg/database"
+	"gohub/pkg/helpers"
 	"gohub/pkg/paginator"
 
 	"github.com/gin-gonic/gin"
@@ -30,9 +31,22 @@ func IsExist(field, value string) bool {
 }
 
 func Paginate(c *gin.Context, perPage int) (articles []Article, paging paginator.Paging) {
+	// 预加载
+	db := database.DB.Model(Article{})
+	db.Preload("Category").Preload("ArticleTag").Preload("ArticleTag.Tag")
+
+	if !helpers.Empty(c.Query("category_id")) {
+		db.Where("category_id", c.Query("category_id"))
+	}
+	if !helpers.Empty(c.Query("tag_id")) {
+		var whereTags = "find_in_set(" + c.Query("tag_id") + ",`tag_ids`)"
+		db.Where(whereTags)
+	}
+
+	// @todo 结合scope 封装查询
 	paging = paginator.Paginate(
 		c,
-		database.DB.Model(Article{}),
+		db,
 		&articles,
 		app.V1URL(database.TableName(&Article{})),
 		perPage,

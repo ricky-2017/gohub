@@ -17,7 +17,6 @@ func (ctrl *CategoriesController) Index(c *gin.Context) {
 	if ok := requests.Validate(c, &request, requests.Pagination); !ok {
 		return
 	}
-
 	data, pager := category.Paginate(c, 10)
 	response.JSON(c, gin.H{
 		"data":  data,
