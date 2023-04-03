@@ -1,11 +1,10 @@
 package tag
 
 import (
+	"github.com/gin-gonic/gin"
 	"gohub/pkg/app"
 	"gohub/pkg/database"
 	"gohub/pkg/paginator"
-
-	"github.com/gin-gonic/gin"
 )
 
 func Get(idstr string) (tag Tag) {
@@ -19,7 +18,7 @@ func GetBy(field, value string) (tag Tag) {
 }
 
 func All() (tags []Tag) {
-	database.DB.Find(&tags)
+	database.DB.Scopes(ScopeEnable).Find(&tags)
 	return
 }
 

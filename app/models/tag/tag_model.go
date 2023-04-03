@@ -4,6 +4,7 @@ package tag
 import (
 	"gohub/app/models"
 	"gohub/pkg/database"
+	"gorm.io/gorm"
 )
 
 type Tag struct {
@@ -28,4 +29,9 @@ func (tag *Tag) Save() (rowsAffected int64) {
 func (tag *Tag) Delete() (rowsAffected int64) {
 	result := database.DB.Delete(&tag)
 	return result.RowsAffected
+}
+
+// ScopeEnable 已启用
+func ScopeEnable(db *gorm.DB) *gorm.DB {
+	return db.Where("status = 0")
 }

@@ -4,6 +4,7 @@ package category
 import (
 	"gohub/app/models"
 	"gohub/pkg/database"
+	"gorm.io/gorm"
 )
 
 type Category struct {
@@ -14,6 +15,11 @@ type Category struct {
 	Status      uint64 `json:"status"`
 
 	models.CommonTimestampsField
+}
+
+// ScopeEnable 已启用
+func ScopeEnable(db *gorm.DB) *gorm.DB {
+	return db.Where("status = 0")
 }
 
 func (category *Category) Create() {

@@ -26,14 +26,22 @@ func (ctrl *ArticlesController) Lists(c *gin.Context) {
 	})
 }
 
-//func (ctrl *ArticlesController) Show(c *gin.Context) {
-//    articleModel := article.Get(c.Param("id"))
-//    if articleModel.ID == 0 {
-//        response.Abort404(c)
-//        return
-//    }
-//    response.Data(c, articleModel)
-//}
+func (ctrl *ArticlesController) Show(c *gin.Context) {
+	articleId := c.Param("id")
+	articleModel := article.Get(articleId)
+	if articleModel.ID == 0 {
+		response.Abort404(c)
+		return
+	}
+	pre, next := article.GetPreNext(articleId)
+
+	response.Data(c, gin.H{
+		"article": articleModel,
+		"pre":     pre,
+		"next":    next,
+	})
+}
+
 //
 //func (ctrl *ArticlesController) Store(c *gin.Context) {
 //

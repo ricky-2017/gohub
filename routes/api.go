@@ -55,27 +55,45 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		}
 
 		// 分类相关
-		cgc := new(controllers.CategoriesController)
-		cgcGroup := v1.Group("/categories")
-		{
-			cgcGroup.GET("", middlewares.AuthJwt(), cgc.Index)
-			cgcGroup.POST("", middlewares.AuthJwt(), cgc.Store)
-			cgcGroup.PUT("/:id", middlewares.AuthJwt(), cgc.Update)
-		}
+		//cgc := new(controllers.CategoriesController)
+		//cgcGroup := v1.Group("/categories")
+		//{
+		//	cgcGroup.GET("", middlewares.AuthJwt(), cgc.Index)
+		//	cgcGroup.POST("", middlewares.AuthJwt(), cgc.Store)
+		//	cgcGroup.PUT("/:id", middlewares.AuthJwt(), cgc.Update)
+		//}
 
-		tpc := new(controllers.TopicsController)
-		tpcGroup := v1.Group("/topics")
-		{
-			tpcGroup.POST("", middlewares.AuthJwt(), tpc.Store)
-			tpcGroup.PUT("/:id", middlewares.AuthJwt(), tpc.Update)
-			tpcGroup.DELETE("/:id", middlewares.AuthJwt(), tpc.Delete)
-		}
+		//tpc := new(controllers.TopicsController)
+		//tpcGroup := v1.Group("/topics")
+		//{
+		//	tpcGroup.POST("", middlewares.AuthJwt(), tpc.Store)
+		//	tpcGroup.PUT("/:id", middlewares.AuthJwt(), tpc.Update)
+		//	tpcGroup.DELETE("/:id", middlewares.AuthJwt(), tpc.Delete)
+		//}
+
+		////////////////////// 客户端路由 ////////////////////////////
 
 		// 文章控制器路由
 		articleController := new(controllers.ArticlesController)
 		articleGroup := v1.Group("/article")
 		{
-			articleGroup.GET("/lists", middlewares.CrossOrigin(), articleController.Lists)
+			articleGroup.GET("", middlewares.CrossOrigin(), articleController.Lists)
+			articleGroup.GET("/:id", middlewares.CrossOrigin(), articleController.Show)
 		}
+
+		// 文章标签
+		articleTagController := new(controllers.TagsController)
+		articleTagGroup := v1.Group("/tag")
+		{
+			articleTagGroup.GET("", middlewares.CrossOrigin(), articleTagController.All)
+		}
+
+		// 文章分类
+		categoriesController := new(controllers.CategoriesController)
+		categoriesGroup := v1.Group("/category")
+		{
+			categoriesGroup.GET("", middlewares.CrossOrigin(), categoriesController.All)
+		}
+
 	}
 }

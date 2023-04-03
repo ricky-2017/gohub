@@ -32,6 +32,11 @@ type Article struct {
 	models.CommonTimestampsField
 }
 
+type PreNextArticleStruct struct {
+	models.BaseModel
+	Title string `json:"title,omitempty"`
+}
+
 func (article *Article) Create() {
 	database.DB.Create(&article)
 }

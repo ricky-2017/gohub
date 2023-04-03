@@ -18,7 +18,7 @@ func GetBy(field, value string) (category Category) {
 }
 
 func All() (categories []Category) {
-	database.DB.Find(&categories)
+	database.DB.Scopes(ScopeEnable).Select([]string{"id", "name"}).Order("id desc").Find(&categories)
 	return
 }
 
