@@ -3,6 +3,7 @@ package routes
 import (
 	controllers "gohub/app/http/controllers/api/v1"
 	"gohub/app/http/controllers/api/v1/auth"
+	"gohub/app/http/controllers/api/v1/system"
 	"gohub/app/http/middlewares"
 
 	"github.com/gin-gonic/gin"
@@ -54,23 +55,6 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			usersGroup.GET("", uc.Index)
 		}
 
-		// 分类相关
-		//cgc := new(controllers.CategoriesController)
-		//cgcGroup := v1.Group("/categories")
-		//{
-		//	cgcGroup.GET("", middlewares.AuthJwt(), cgc.Index)
-		//	cgcGroup.POST("", middlewares.AuthJwt(), cgc.Store)
-		//	cgcGroup.PUT("/:id", middlewares.AuthJwt(), cgc.Update)
-		//}
-
-		//tpc := new(controllers.TopicsController)
-		//tpcGroup := v1.Group("/topics")
-		//{
-		//	tpcGroup.POST("", middlewares.AuthJwt(), tpc.Store)
-		//	tpcGroup.PUT("/:id", middlewares.AuthJwt(), tpc.Update)
-		//	tpcGroup.DELETE("/:id", middlewares.AuthJwt(), tpc.Delete)
-		//}
-
 		////////////////////// 客户端路由 ////////////////////////////
 
 		// 文章控制器路由
@@ -94,6 +78,17 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		{
 			categoriesGroup.GET("", middlewares.CrossOrigin(), categoriesController.All)
 		}
+	}
 
+	// system模块
+	v1.Use(middlewares.LimitIP("200-H"))
+	{
+		LoginGroup := v1.Group("/system")
+		LoginGroup.Use(middlewares.LimitIP("200-H"))
+		{
+			lc := new(system.LoginController)
+			LoginGroup.GET("/captcha", middlewares.CrossOrigin(), lc.Captcha)
+			LoginGroup.POST("/login", middlewares.CrossOrigin(), lc.Login)
+		}
 	}
 }

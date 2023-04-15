@@ -9,7 +9,7 @@ import (
 )
 
 type LoginByPasswordDto struct {
-	Account       string `json:"account,omitempty" valid:"account"`
+	UserName      string `json:"account,omitempty" valid:"user_name"`
 	Password      string `json:"password,omitempty" valid:"password"`
 	CaptchaID     string `json:"captcha_id,omitempty" valid:"captcha_id"`
 	CaptchaAnswer string `json:"captcha_answer,omitempty" valid:"captcha_answer"`
@@ -17,14 +17,14 @@ type LoginByPasswordDto struct {
 
 func ValidLoginByPassword(data interface{}, c *gin.Context) map[string][]string {
 	rule := govalidator.MapData{
-		"account":        []string{"required", "min:3"},
+		"user_name":      []string{"required", "min:3"},
 		"password":       []string{"required", "min:6"},
 		"captcha_id":     []string{"required"},
 		"captcha_answer": []string{"required", "digits:6"},
 	}
 
 	message := govalidator.MapData{
-		"account": []string{
+		"user_name": []string{
 			"required:账户为必填项",
 			"min:账户ID长度需要超过3位",
 		},

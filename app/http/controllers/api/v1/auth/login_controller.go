@@ -43,7 +43,7 @@ func (lc *LoginController) LoginByAccount(c *gin.Context) {
 	if ok := requests.Validate(c, &request, dto.ValidLoginByPassword); !ok {
 		return
 	}
-	user, err := auth.LoginByAccount(request.Account, request.CaptchaID, request.CaptchaAnswer, request.Password)
+	user, err := auth.LoginByAccount(request.UserName, request.CaptchaID, request.CaptchaAnswer, request.Password)
 	if err != nil {
 		// 失败，显示错误提示
 		response.Error(c, err, "账号不存在或密码错误")

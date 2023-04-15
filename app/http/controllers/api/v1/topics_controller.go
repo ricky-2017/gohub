@@ -34,7 +34,7 @@ func (ctrl *TopicsController) Store(c *gin.Context) {
 	}
 }
 
-// 更新话题
+// Update 更新话题
 func (ctrl *TopicsController) Update(c *gin.Context) {
 	topicModel := topic.Get(c.Param("id"))
 	if topicModel.ID == 0 {
